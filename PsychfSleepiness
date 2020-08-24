@@ -1,0 +1,80 @@
+
+modelstrange3 <- '	
+#sleepiness
+sleepiness =~ ESS1 + ESS2 + ESS3 + ESS4 + ESS5 + ESS6 + ESS7 + ESS8
+# latent variable definitions	
+#psychological functioning 	
+selfregulation =~ PS2 + PS3 + PS4 + PS7 + PS8 + PS10 + PS14
+na =~ PS5 + PS9 + PS11 + PS18 + PS19
+lowresilience =~ rPS6 + rPS12 + rPS15 + rPS16 + rPS20
+#sleep	
+quantity =~ ZSP_DDPOZ6 + ZSP_PDPOZ6 + ZPSPDEPR	
+quality =~ ZPSPNESP1 + ZPSPNESP2 + ZPSPNESP3 + ZPSPMS
+latency =~ ZPSPLAT + ZPSPLAT2	
+
+#outcomes	
+medicalerr =~  MN_IZC + MN_P	
+safetycomp =~ VAR_D + VAR_IND	
+
+sleep =~ quantity + 1*quality + latency	
+psychf =~ 1*selfregulation + lowresilience + na
+
+# regressions 	
+sleepiness ~ (-.275)*sleep 
+psychf ~ (-.779)*sleep + (.156)*sleepiness
+medicalerr ~ (.357)*psychf
+safetycomp ~ (.364)*psychf
+
+#covariances
+ESS1 ~~ ESS2
+PS7 ~~ PS8
+ESS2 ~~ ESS5
+PS2 ~~ PS4
+rPS6 ~~ rPS20
+PS8 ~~ PS11
+ESS6 ~~ ESS7
+'
+
+
+Mfitstrange3 <- sem(model = modelstrange3, data = SLEEPWORKFINAL_love4, std.lv = TRUE, estimator = "MLM")	
+summary(Mfitstrange3, fit.measures=T, standardized=TRUE)	
+
+
+
+
+modelstrange6 <- '	
+#sleepiness
+sleepiness =~ ESS1 + ESS2 + ESS3 + ESS4 + ESS5 + ESS6 + ESS7 + ESS8
+# latent variable definitions	
+#psychological functioning 	
+selfregulation =~ PS2 + PS3 + PS4 + PS7 + PS8 + PS10 + PS14
+na =~ PS5 + PS9 + PS11 + PS18 + PS19
+lowresilience =~ rPS6 + rPS12 + rPS15 + rPS16 + rPS20
+#sleep	
+quantity =~ ZSP_DDPOZ6 + ZSP_PDPOZ6 + ZPSPDEPR	
+quality =~ ZPSPNESP1 + ZPSPNESP2 + ZPSPNESP3 + ZPSPMS
+latency =~ ZPSPLAT + ZPSPLAT2	
+
+#outcomes	
+medicalerr =~  MN_IZC + MN_P	
+safetycomp =~ VAR_D + VAR_IND	
+
+sleep =~ quantity + 1*quality + latency	
+psychf =~ 1*selfregulation + lowresilience + na
+
+# regressions 	
+sleepiness ~ sleep 
+psychf ~ sleep + sleepiness
+medicalerr ~ psychf + sleep
+safetycomp ~ psychf + sleep
+
+#covariances
+
+'
+
+
+Mfitstrange6 <- sem(model = modelstrange6, data = SLEEPWORKFINAL_love4, std.lv = TRUE, estimator = "MLM")	
+summary(Mfitstrange6, fit.measures=T, standardized=TRUE)	
+
+lavaanPlot(model = Mfitstrange6, labels = labels, node_options = list(shape = "box", fontname = "Helvetica"), edge_options = list(color = "black"), coefs = TRUE, covs = TRUE, stars = TRUE, stand = FALSE, sig = 1.00)
+
