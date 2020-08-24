@@ -1,0 +1,45 @@
+
+modelstrange6 <- '	
+# latent variable definitions	
+#psychological functioning 	
+selfregulation =~ PS2 + PS3 + PS4 + PS7 + PS8 + PS10 + PS14
+na =~ PS5 + PS9 + PS11 + PS18 + PS19
+lowresilience =~ rPS6 + rPS12 + rPS15 + rPS16 + rPS20
+#sleep	
+quantity =~ ZSP_DDPOZ6 + ZSP_PDPOZ6 + ZPSPDEPR	
+quality =~ ZPSPNESP1 + ZPSPNESP2 + ZPSPNESP3 + ZPSPMS
+latency =~ ZPSPLAT + ZPSPLAT2	
+
+#outcomes	
+medicalerr =~  MN_IZC + MN_P	
+safetycomp =~ VAR_D + VAR_IND	
+
+sleep =~ quantity + 1*quality + latency	
+psychf =~ 1*selfregulation + lowresilience + na
+
+# regressions 	
+psychf ~ sleep 
+medicalerr ~ psychf + sleep
+safetycomp ~ psychf + sleep
+
+#covariances
+medicalerr ~~ safetycomp
+PS4 ~~PS8
+PS5 ~~ PS18
+PS7 ~~ PS8
+PS2 ~~ PS4
+rPS6 ~~ rPS20
+PS5 ~~ PS19
+PS18 ~~ PS19
+PS7 ~~ PS10
+'
+
+
+Mfitstrange6 <- sem(model = modelstrange6, data = SLEEPWORKFINAL_love12, std.lv = TRUE, estimator = "MLM")	
+summary(Mfitstrange6, fit.measures=T, standardized=TRUE)	
+
+labels <- list( psychf = "negative psychological functioning at work", sleep = "sleep", medicalerr = "medical errors", safetycomp = "compromised safety", lowresilience = "low resilience", selfregulation = "negative self-regulatory outcomes", na ="negative affectivity",
+               ZPSPDD = "SPWD", ZPSPPD= "SPFD", ZPSPDEPR = "SPDEPR", ZPSPNESP1 = "INS1", ZPSPNESP2 = "INS2", ZPSPNESP3="INS3", ZPSPMS ="NM", ZPSPLAT="ALAT", ZPSPLAT2="HLAT", MN_IZC = "MN_EXH", MN_P = "MN_END")
+
+
+lavaanPlot(model = Mfitstrange6, labels = labels, node_options = list(shape = "box", fontname = "Helvetica"), edge_options = list(color = "black"), coefs = TRUE, covs = TRUE, stars = TRUE, stand = FALSE, sig = 1.00)
