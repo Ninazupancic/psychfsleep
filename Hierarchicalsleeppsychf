@@ -1,0 +1,32 @@
+
+
+#MODEL Z OBRNJENIMI POSTAVKAMI hierarhični with mod indices
+psmodel19 <- '
+samoregulacija =~ rPS2 + rPS3 + rPS4 + rPS7 + rPS8 + rPS10 + rPS14
+nizkanegemoc =~ rPS5 + rPS9 + rPS11 + rPS18 + rPS19 
+rezilientnost =~ PS6 + PS12 + PS15 + PS16 + PS20
+psih =~ 1*selfregulation + lowna + resilience
+kolicina =~ SP_DDPOZ6 + SP_PDPOZ6 + depr2
+kval =~  POZSNESP1_S + POZSNESP2_S + POZSPNESP3_S 
+lat =~ POSPLAT_S + POZSPLAT2_S
+krep=~ POZSPNENASP_S + POZSPBUDNOST_S +  POZSPMS_S
+spanje=~ kol + kval + lat + 1*krep
+
+Spanjepsiholosko=~ 1*sleep + ps
+rPS7 ~~ rPS8
+PS15 ~~ PS16
+rPS2 ~~ rPS4
+PS6 ~~ PS20
+rPS7 ~~ rPS10
+rPS9 ~~ rPS11
+rPS2 ~~ rPS7
+rPS8 ~~ rPS10
+rPS3 ~~ rPS5
+'
+
+psfit19 <- cfa(psmodel19, data=SLEEPWORKFINAL_love4, estimator = "MLR", std.lv = TRUE)
+summary(psfit19, fit.measures=T, standardized =T)
+
+lavaanPlot(model = psfit19, node_options = list(shape = "box", fontname = "Helvetica"), edge_options = list(color = "grey"), coefs = TRUE, covs = TRUE)
+
+modindices(psfit19, standardized=TRUE, minimum.value = 10, sort = TRUE)
