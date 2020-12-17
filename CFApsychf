@@ -1,21 +1,21 @@
 
 #MODEL Z OBRNJENIMI POSTAVKAMI hierarhični with mod indices
 psmodel19 <- '
-selfregulation =~ PS2 + PS3 + PS4 + PS7 + PS8 + PS10 + PS14
-na =~ PS5 + PS9 + PS11 + PS18 + PS19 
-lowresilience =~ rPS6 + rPS12 + rPS15 + rPS16 + rPS20
+selfregulation =~ PS1 + PS2 + PS3 + PS4 + PS5 + PS6 + PS7
+na =~ PN1 + PN2 + PN3 + PN4 + PN5 
+lowresilience =~ PR1 + PR2 + PR3 + PR4 + PR5
 ps =~ 1*selfregulation + na + lowresilience
-PS2 ~~ PS4
-PS7 ~~ PS10
-PS3~~PS4
-rPS15~~rPS16
-PS7 ~~ PS8
-PS8 ~~ PS10
-PS2~~ PS3
-PS8~~PS14
+PS1 ~~ PS3
+PS4 ~~ PS6
+PS2 ~~PS3
+PR3 ~~ PR4
+PS4 ~~ PS5
+PS5 ~~ PS6
+PS1 ~~ PS2
+PS5 ~~ PS7
 '
 
-psfit19 <- cfa(psmodel19, data=SLEEPWORKFINAL_love4, estimator = "MLR", std.lv = TRUE)
+psfit19 <- cfa(psmodel19, data=SLEEP_WORK_FINAL_SUPPLEMENTARY, estimator = "MLR", std.lv = TRUE)
 summary(psfit19, fit.measures=T, standardized =T)
 
 parameterEstimates(psfit19, standardized=TRUE)
@@ -27,27 +27,27 @@ reliability(psfit19)
 lavaanPlot(model = psfit19, node_options = list(shape = "box", fontname = "Helvetica"), edge_options = list(color = "grey"), coefs = F)
 lavaanPlot(model = psfit19, labels = labels, node_options = list(shape = "box", fontname = "Helvetica"), edge_options = list(color = "grey"), coefs = TRUE, covs = TRUE)
 
-#1faktorski model 
+#1 factor model
 
 psmodel20 <- '
-f =~ PS2 + PS3 + PS4 + PS7 + PS8 + PS10 + PS14 + PS5 + PS9 + PS11 + PS18 + PS19 + rPS6 + rPS12 + rPS15 + rPS16 + rPS20
+f =~ PS1 + PS2 + PS3 + PS4 + PS5 + PS6 + PS7 + PN1 + PN2 + PN3 + PN4 + PN5 + PR1 + PR2 + PR3 + PR4 + PR5
 '
 
-psfit20 <- cfa(psmodel20, data=SLEEPWORKFINAL_love4, estimator = "MLR", std.lv = TRUE)
+psfit20 <- cfa(psmodel20, data=SLEEP_WORK_FINAL_SUPPLEMENTARY, estimator = "MLR", std.lv = TRUE)
 summary(psfit20, fit.measures=T, standardized =T)
 
-parameterEstimates(psfit19, standardized=TRUE)
+parameterEstimates(psfit20, standardized=TRUE)
 
 anova(psfit18,psfit19)
 anova(psfit20, psfit2f)
 
 #2factormodel
 psmodel2f <- '
-negativeselfregulation =~ PS2 + PS3 + PS4 + PS7 + PS8 + PS10 + PS14 + rPS6 + rPS12 + rPS15 + rPS16 + rPS20
-na =~ PS5 + PS9 + PS11 + PS18 + PS19 
+negativeselfregulation =~ PS1 + PS2 + PS3 + PS4 + PS5 + PS6 + PS7 + PR1 + PR2 + PR3 + PR4 + PR5
+na =~ PN1 + PN2 + PN3 + PN4 + PN5 
 '
 
-psfit2f <- cfa(psmodel2f, data=SLEEPWORKFINAL_love4, estimator = "MLR")
+psfit2f <- cfa(psmodel2f, data=SLEEP_WORK_FINAL_SUPPLEMENTARY, estimator = "MLR")
 summary(psfit2f, fit.measures=T, standardized =T)
 
 parameterEstimates(psfit19, standardized=TRUE)
