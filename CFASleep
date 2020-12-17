@@ -1,15 +1,36 @@
 
+#short threefactors - FINAL 
+modelspanje15 <-'
+quantity =~ W + F + R
+quality =~ IS1 + IS2 + IS3 + N
+latency =~ AL + FL
+
+sleep =~ quantity + 1*quality + latency
+'
+
+
+sleepfit15 <- cfa(modelspanje15, data=SLEEP_WORK_FINAL_SUPPLEMENTARY, std.lv = TRUE, estimator="MLR")
+summary(sleepfit15, fit.measures=T, standardized =T)
+
+reliability(sleepfit15)
+modindices(sleepfit15, standardized=TRUE, minimum.value = 10, sort = TRUE)
+parameterestimates(sleepfit15)
+
+reliability(sleepfit13)
+
+#ONECOVARIANCE
+
 modelspanje13 <-'
-quantity =~ SP_DDPOZ6 + SP_PDPOZ6 + depr2	
-quality =~ POZSNESP1_S + POZSNESP2_S + POZSPNESP3_S + POZSPMS_S
-latency =~ POSPLAT_S + POZSPLAT2_S
-SP_PDPOZ6 ~~ depr2
+quantity =~ W + F + R	
+quality =~ IS1 + IS2 + IS3 + N
+latency =~ AL + FL
+W ~~ R
 
 
 sleep =~ quantity + 1*quality + latency'
 
 
-sleepfit13 <- cfa(modelspanje13, data=SLEEPWORKFINAL_love5, std.lv = TRUE, estimator="MLR")
+sleepfit13 <- cfa(modelspanje13, data=SLEEP_WORK_FINAL_SUPPLEMENTARY, std.lv = TRUE, estimator="MLR")
 summary(sleepfit13, fit.measures=T, standardized =T)
 
 reliability(sleepfit13)
@@ -19,41 +40,22 @@ parameterestimates(sleepfit13)
 reliability(sleepfit13)
 
 
-#short threefactors
-modelspanje15 <-'
-quantity =~ SP_DDPOZ6 + SP_PDPOZ6 + depr2	
-quality =~ POZSNESP1_S + POZSNESP2_S + POZSPNESP3_S + POZSPMS_S
-latency =~ POSPLAT_S + POZSPLAT2_S
 
-sleep =~ quantity + 1*quality + latency
-'
-
-
-sleepfit15 <- cfa(modelspanje15, data=SLEEPWORKFINAL_love2, std.lv = TRUE, estimator="MLR")
-summary(sleepfit15, fit.measures=T, standardized =T)
-
-reliability(sleepfit15)
-modindices(sleepfit15, standardized=TRUE, minimum.value = 10, sort = TRUE)
-parameterestimates(sleepfit15)
-
-reliability(sleepfit13)
-
-#short onef
+#short one factor
 modelspanje1 <-'
-quantity =~ SP_DDPOZ6 + SP_PDPOZ6 + depr2	+ POZSNESP1_S + POZSNESP2_S + POZSPNESP3_S + POZSPMS_S
-+ POSPLAT_S + POZSPLAT2_S'
+quantity =~ W + F + R	+ IS1 + IS2 + IS3 + N + AL + FL'
 
-sleepfit1 <- cfa(modelspanje1, data=SLEEPWORKFINAL_love5, estimator="MLR")
+sleepfit1 <- cfa(modelspanje1, data=SLEEP_WORK_FINAL_SUPPLEMENTARY, estimator="MLR")
 summary(sleepfit1, fit.measures=T, standardized =T )
 
 parameterEstimates(sleepfit1, standardized=TRUE)
 
 #short 2f
 modelspanje2 <-'
-quantity =~ SP_DDPOZ6 + SP_PDPOZ6 + depr2	
-quality =~ POZSNESP1_S + POZSNESP2_S + POZSPNESP3_S + POZSPMS_S + POSPLAT_S + POZSPLAT2_S'
+quantity =~ W + F + R
+quality =~ IS1 + IS2 + IS3 + N + AL + FL'
 
-sleepfit2 <- cfa(modelspanje2, data=SLEEPWORKFINAL_love5, estimator="MLR")
+sleepfit2 <- cfa(modelspanje2, data=SLEEP_WORK_FINAL_SUPPLEMENTARY, estimator="MLR")
 summary(sleepfit2, fit.measures=T, standardized =T )
 
 parameterEstimates(sleepfit1, standardized=TRUE)
@@ -61,13 +63,13 @@ parameterEstimates(sleepfit1, standardized=TRUE)
 #threefactor model 
 
 modelspanje18 <-'
-quantity =~ SP_DDPOZ6 + SP_PDPOZ6 + depr2	
-quality =~ POZSNESP1_S + POZSNESP2_S + POZSPNESP3_S + POZSPMS_S
-latency =~ POSPLAT_S + POZSPLAT2_S
+quantity =~ W + F+ R
+quality =~ IS1 + IS2 + IS3 + N
+latency =~ AL + FL
 '
 
 
-sleepfit18 <- cfa(modelspanje18, data=SLEEPWORKFINAL_love2, std.lv = TRUE, estimator="MLR")
+sleepfit18 <- cfa(modelspanje18, data=SLEEP_WORK_FINAL_SUPPLEMENTARY, std.lv = TRUE, estimator="MLR")
 summary(sleepfit18, fit.measures=T, standardized =T)
 
 reliability(sleepfit18)
